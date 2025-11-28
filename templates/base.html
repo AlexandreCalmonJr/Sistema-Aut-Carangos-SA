@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carangos S/A - Sistema Integrado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar glass-panel">
+        <div class="brand">Carangos S/A</div>
+        <div class="nav-links">
+            {% if session.get('user_id') %}
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+
+            {% if session.get('role') in ['rh', 'admin'] %}
+            <a href="{{ url_for('create_user') }}">Gerenciar Usuários</a>
+            {% endif %}
+
+            <a href="{{ url_for('profile') }}">Perfil</a>
+            <a href="{{ url_for('logout') }}" style="color: var(--danger);">Sair</a>
+            {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} glass-panel">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; color: var(--secondary-color);">
+        &copy; 2025 Carangos S/A. Todos os direitos reservados.
+    </footer>
+</body>
+
+</html>

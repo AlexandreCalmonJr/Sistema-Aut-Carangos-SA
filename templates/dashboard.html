@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin-bottom: 2rem;">
+    <h1>Olá, <span style="color: var(--primary-color);">{{ user }}</span></h1>
+    <p style="color: var(--secondary-color);">Bem-vindo ao painel de controle da Carangos S/A.</p>
+</div>
+
+<!-- Executive Summary (Visible only to Global Roles) -->
+{% if role in ['admin', 'presidente', 'conselho'] %}
+<div class="glass-panel"
+    style="margin-bottom: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); border: 1px solid var(--accent-color);">
+    <h2 style="color: var(--accent-color); margin-bottom: 1rem;">📊 Visão Executiva</h2>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+        <div style="text-align: center;">
+            <small>Produção Semanal</small>
+            <div style="font-size: 1.5rem; font-weight: bold;">{{ total_semanal if total_semanal else 'N/A' }}</div>
+        </div>
+        <div style="text-align: center;">
+            <small>Custo Total</small>
+            <div style="font-size: 1.5rem; font-weight: bold;">R$ {{ "%.2f"|format(custo_total_producao) if
+                custo_total_producao else 'N/A' }}</div>
+        </div>
+        <div style="text-align: center;">
+            <small>Preço Venda</small>
+            <div style="font-size: 1.5rem; font-weight: bold; color: var(--success);">R$ {{ "%.2f"|format(preco_venda)
+                if preco_venda else 'N/A' }}</div>
+        </div>
+        <div style="text-align: center;">
+            <small>Funcionários</small>
+            <div style="font-size: 1.5rem; font-weight: bold;">{{ qtd_funcionarios if qtd_funcionarios else 'N/A' }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="dashboard-grid">
+    {% if role in ['admin', 'presidente', 'conselho', 'diretor_operacional', 'gerente_montagem', 'func_producao'] %}
+    <a href="{{ url_for('mod_operacional') }}" class="card glass-panel">
+        <h3>🏭 Operacional</h3>
+        <p>Gerencie a produção diária, turnos e relatórios de capacidade.</p>
+    </a>
+    {% endif %}
+
+    {% if role in ['admin', 'presidente', 'conselho', 'diretor_operacional', 'gerente_insumos', 'func_estoque'] %}
+    <a href="{{ url_for('mod_estoque') }}" class="card glass-panel">
+        <h3>📦 Estoque</h3>
+        <p>Controle de insumos, cadastro de produtos e verificação de custos.</p>
+    </a>
+    {% endif %}
+
+    {% if role in ['admin', 'presidente', 'conselho', 'diretor_financeiro', 'gerente_financeiro', 'func_financeiro'] %}
+    <a href="{{ url_for('mod_financeiro') }}" class="card glass-panel">
+        <h3>💰 Financeiro</h3>
+        <p>Gestão de despesas fixas, custos de produção e formação de preço.</p>
+    </a>
+    {% endif %}
+
+    {% if role in ['admin', 'presidente', 'conselho', 'diretor_rh', 'gerente_rh', 'func_rh'] %}
+    <a href="{{ url_for('mod_rh') }}" class="card glass-panel">
+        <h3>👥 Recursos Humanos</h3>
+        <p>Cadastro de funcionários, folha de pagamento e cálculo de impostos.</p>
+    </a>
+    {% endif %}
+</div>
+
+{% if role == 'admin' %}
+<div style="margin-top: 3rem;">
+    <h2>Painel Administrativo</h2>
+    <div class="glass-panel" style="padding: 1.5rem; margin-top: 1rem;">
+        <p>Você tem acesso total ao sistema.</p>
+        <a href="{{ url_for('create_user') }}" class="btn btn-primary">Gerenciar Usuários</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

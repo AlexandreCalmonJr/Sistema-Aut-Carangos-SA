@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1>Módulo Estoque</h1>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" style="width: auto;">Voltar</a>
+</div>
+
+<div class="dashboard-grid" style="grid-template-columns: 1fr 2fr;">
+    <!-- Form -->
+    <div class="glass-panel" style="padding: 1.5rem;">
+        <h3>Novo Produto</h3>
+        <form method="POST">
+            <div class="form-group">
+                <label>Código</label>
+                <input type="text" name="codigo" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Nome</label>
+                <input type="text" name="nome" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Data Fabricação</label>
+                <input type="date" name="data_fabricacao" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Fornecedor</label>
+                <input type="text" name="fornecedor" class="form-control">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label>Quantidade</label>
+                    <input type="number" name="quantidade" class="form-control" required min="0">
+                </div>
+                <div class="form-group">
+                    <label>Valor Compra (R$)</label>
+                    <input type="number" name="valor_compra" class="form-control" required min="0" step="0.01">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+    </div>
+
+    <!-- Costs -->
+    <div class="glass-panel" style="padding: 1.5rem;">
+        <h3>Análise de Custos</h3>
+        <div
+            style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; text-align: center;">
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                <small>Total Atual</small>
+                <div style="font-size: 1.5rem; font-weight: bold; color: var(--accent-color);">R$ {{
+                    "%.2f"|format(custo_total_atual) }}</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                <small>Projeção Mensal</small>
+                <div style="font-size: 1.5rem; font-weight: bold;">R$ {{ "%.2f"|format(custo_mensal) }}</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                <small>Projeção Anual</small>
+                <div style="font-size: 1.5rem; font-weight: bold;">R$ {{ "%.2f"|format(custo_anual) }}</div>
+            </div>
+        </div>
+
+        <h4>Lista de Produtos</h4>
+        <div style="max-height: 400px; overflow-y: auto;">
+            <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                <thead>
+                    <tr style="text-align: left; border-bottom: 1px solid var(--glass-border);">
+                        <th style="padding: 0.5rem;">Cód</th>
+                        <th style="padding: 0.5rem;">Nome</th>
+                        <th style="padding: 0.5rem;">Qtd</th>
+                        <th style="padding: 0.5rem;">Valor</th>
+                        <th style="padding: 0.5rem;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in produtos %}
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <td style="padding: 0.5rem;">{{ p['codigo'] }}</td>
+                        <td style="padding: 0.5rem;">{{ p['nome'] }}</td>
+                        <td style="padding: 0.5rem;">{{ p['quantidade'] }}</td>
+                        <td style="padding: 0.5rem;">R$ {{ "%.2f"|format(p['valor_compra']) }}</td>
+                        <td style="padding: 0.5rem;">R$ {{ "%.2f"|format(p['quantidade'] * p['valor_compra']) }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" style="padding: 1rem; text-align: center; color: var(--secondary-color);">Nenhum
+                            produto cadastrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
