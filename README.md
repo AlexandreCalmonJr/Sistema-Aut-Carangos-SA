@@ -85,7 +85,12 @@ Sistema Aut Carangos SA/
 
 2.  **Instale as dependências**:
     ```bash
-    pip install flask werkzeug
+    pip install -r requirements.txt
+    ```
+    
+    Ou manualmente:
+    ```bash
+    pip install flask werkzeug python-dotenv
     ```
 
 3.  **Inicialize o Banco de Dados de Usuários**:
@@ -93,6 +98,37 @@ Sistema Aut Carangos SA/
     ```bash
     python scripts/seed_users.py
     ```
+
+---
+
+## ☁️ Deploy na Nuvem
+
+O sistema está pronto para deploy em plataformas cloud modernas. Suportamos:
+
+*   **Render** - Deploy simples com plano gratuito
+*   **Railway** - Deploy automático via Git
+*   **Northflank** - Plataforma robusta com containers
+
+### Deploy Rápido
+
+1.  **Configure as variáveis de ambiente**:
+    *   `SECRET_KEY`: Chave secreta (gere com `python -c "import secrets; print(secrets.token_hex(32))"`)
+    *   `FLASK_ENV`: `production`
+
+2.  **Configure volume persistente** para `/app/data` (para manter os dados JSON)
+
+3.  **Faça deploy** seguindo o guia detalhado: **[DEPLOY.md](DEPLOY.md)**
+
+### Teste Local com Docker
+
+```bash
+# Build e execute
+docker-compose up --build
+
+# Acesse http://localhost:5000
+```
+
+📖 **Guia Completo**: Veja [DEPLOY.md](DEPLOY.md) para instruções detalhadas de cada plataforma.
 
 ---
 

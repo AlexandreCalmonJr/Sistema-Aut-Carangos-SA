@@ -3,12 +3,17 @@ from flask import Flask, render_template, redirect, url_for, request, flash, ses
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Import modules
 from modules import data_manager, operacional, estoque, financeiro, rh
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey' # Change this in production
+# Use environment variable for secret key, with fallback for development
+app.secret_key = os.getenv('SECRET_KEY', 'dev-key-only-change-in-production')
 
 def init_db():
     # Initialize JSON files if empty
@@ -376,4 +381,10 @@ def mod_rh():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True)
+    # Get configuration from environment variables
+    port = int(os.getenv('PORT', 5000))
+    debug = os.getenv('FLASK_ENV', 'production') == 'development'
+    
+    # Run with host 0.0.0.0 to allow external connections (required for cloud)
+    app.run(host='0.0.0.0', port=port, debug=debug)
+

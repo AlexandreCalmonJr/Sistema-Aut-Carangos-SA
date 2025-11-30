@@ -1,7 +1,8 @@
 import json
 import os
 
-DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data')
+# Allow custom data directory via environment variable (useful for cloud deployments)
+DATA_DIR = os.getenv('DATA_DIR', os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data'))
 
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
