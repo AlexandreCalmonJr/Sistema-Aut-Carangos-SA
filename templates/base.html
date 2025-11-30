@@ -20,21 +20,25 @@
                 <i class="fas fa-car" style="margin-right: 8px;"></i>Carangos S/A
             </div>
             <nav class="sidebar-nav">
-                <a href="{{ url_for('dashboard') }}" class="{% if request.path == url_for('dashboard') %}active{% endif %}">
+                <a href="{{ url_for('dashboard') }}"
+                    class="{% if request.path == url_for('dashboard') %}active{% endif %}">
                     <i class="fas fa-chart-line"></i> Dashboard
                 </a>
-                
+
                 {% if session.get('role') in ['presidente', 'conselho', 'admin', 'dir_operacional'] %}
-                <a href="{{ url_for('mod_operacional') }}" class="{% if request.path == url_for('mod_operacional') %}active{% endif %}">
+                <a href="{{ url_for('mod_operacional') }}"
+                    class="{% if request.path == url_for('mod_operacional') %}active{% endif %}">
                     <i class="fas fa-industry"></i> Operacional
                 </a>
-                <a href="{{ url_for('mod_estoque') }}" class="{% if request.path == url_for('mod_estoque') %}active{% endif %}">
+                <a href="{{ url_for('mod_estoque') }}"
+                    class="{% if request.path == url_for('mod_estoque') %}active{% endif %}">
                     <i class="fas fa-warehouse"></i> Estoque
                 </a>
                 {% endif %}
 
                 {% if session.get('role') in ['presidente', 'conselho', 'admin', 'dir_financeira'] %}
-                <a href="{{ url_for('mod_financeiro') }}" class="{% if request.path == url_for('mod_financeiro') %}active{% endif %}">
+                <a href="{{ url_for('mod_financeiro') }}"
+                    class="{% if request.path == url_for('mod_financeiro') %}active{% endif %}">
                     <i class="fas fa-money-bill-wave"></i> Financeiro
                 </a>
                 {% endif %}
@@ -46,10 +50,16 @@
                 {% endif %}
 
                 {% if session.get('role') in ['admin'] %}
-                <a href="{{ url_for('create_user') }}" class="{% if request.path == url_for('create_user') %}active{% endif %}">
+                <a href="{{ url_for('create_user') }}"
+                    class="{% if request.path == url_for('create_user') %}active{% endif %}">
                     <i class="fas fa-user-cog"></i> Gerenciar Usuários
                 </a>
                 {% endif %}
+
+                <a href="{{ url_for('terminal') }}"
+                    class="{% if request.path == url_for('terminal') %}active{% endif %}">
+                    <i class="fas fa-terminal"></i> Terminal
+                </a>
 
                 <a href="{{ url_for('profile') }}" class="{% if request.path == url_for('profile') %}active{% endif %}">
                     <i class="fas fa-user-circle"></i> Perfil
@@ -87,8 +97,10 @@
         </div>
     </div>
 
-    <footer style="text-align: center; padding: 2rem; background: var(--glass-bg); backdrop-filter: blur(10px); border-top: 1px solid var(--glass-border);">
-        <p style="margin: 0; background: linear-gradient(135deg, var(--primary-color) 0%, #8B5CF6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600;">
+    <footer
+        style="text-align: center; padding: 2rem; background: var(--glass-bg); backdrop-filter: blur(10px); border-top: 1px solid var(--glass-border);">
+        <p
+            style="margin: 0; background: linear-gradient(135deg, var(--primary-color) 0%, #8B5CF6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600;">
             &copy; 2025 Carangos S/A. Todos os direitos reservados.
         </p>
     </footer>
