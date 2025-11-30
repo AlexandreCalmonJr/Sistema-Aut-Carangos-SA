@@ -1,14 +1,19 @@
 {% extends "base.html" %}
 
+{% block title %}Módulo Operacional - Carangos S/A{% endblock %}
+
 {% block content %}
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-    <h1>Módulo Operacional</h1>
-    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" style="width: auto;">Voltar</a>
+<div style="margin-bottom: 2.5rem;">
+    <h1 style="font-size: 2rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem;">
+        <i class="fas fa-industry" style="color: var(--primary-color);"></i> Módulo Operacional
+    </h1>
+    <p style="color: var(--text-secondary); font-size: 1.05rem;">Gerencie a produção diária, turnos e relatórios de
+        capacidade.</p>
 </div>
 
-<div class="dashboard-grid-split">
+<div class="dashboard-grid-split" style="margin-top: 1rem;">
     <!-- Form -->
-    <div class="glass-panel" style="padding: 1.5rem;">
+    <div class="card">
         <h3>Registrar Produção</h3>
         <form method="POST">
             <div class="form-group">
@@ -40,21 +45,29 @@
     </div>
 
     <!-- Report -->
-    <div class="glass-panel" style="padding: 1.5rem;">
-        <h3>Relatório de Produção</h3>
-        <div
-            style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; text-align: center;">
-            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
-                <small>Total Semanal</small>
-                <div style="font-size: 1.5rem; font-weight: bold; color: var(--accent-color);">{{ total_semanal }}</div>
+    <div class="card">
+        <h3 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+            <i class="fas fa-chart-bar" style="color: var(--primary-color);"></i> Relatório de Produção
+        </h3>
+        <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 1.5rem;">
+            <div class="kpi-card">
+                <i class="fas fa-boxes"
+                    style="font-size: 1.75rem; color: var(--primary-color); margin-bottom: 0.5rem;"></i>
+                <div class="label">Total Semanal</div>
+                <div class="value" style="color: var(--primary-color);">{{ total_semanal }}</div>
             </div>
-            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
-                <small>Média Diária</small>
-                <div style="font-size: 1.5rem; font-weight: bold;">{{ "%.1f"|format(media_diaria) }}</div>
+            <div class="kpi-card"
+                style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%); border-color: rgba(139, 92, 246, 0.2); border-left-color: #8B5CF6;">
+                <i class="fas fa-calendar-day" style="font-size: 1.75rem; color: #8B5CF6; margin-bottom: 0.5rem;"></i>
+                <div class="label">Média Diária</div>
+                <div class="value" style="color: #8B5CF6;">{{ "%.1f"|format(media_diaria) }}</div>
             </div>
-            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
-                <small>Projeção Mensal</small>
-                <div style="font-size: 1.5rem; font-weight: bold;">{{ mensal_est }}</div>
+            <div class="kpi-card"
+                style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%); border-color: rgba(16, 185, 129, 0.2); border-left-color: var(--success-color);">
+                <i class="fas fa-chart-line"
+                    style="font-size: 1.75rem; color: var(--success-color); margin-bottom: 0.5rem;"></i>
+                <div class="label">Projeção Mensal</div>
+                <div class="value" style="color: var(--success-color);">{{ mensal_est }}</div>
             </div>
         </div>
 
@@ -71,40 +84,40 @@
 
         <h4>Comparativo Ideal (Capacidade 100%)</h4>
         <div style="margin-top: 0.5rem;">
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 1rem;">
+            <table class="data-table" style="margin-bottom: 1rem;">
                 <thead>
-                    <tr style="text-align: left; border-bottom: 1px solid var(--glass-border);">
-                        <th style="padding: 0.5rem;">Período</th>
-                        <th style="padding: 0.5rem;">Ideal</th>
-                        <th style="padding: 0.5rem;">Real</th>
-                        <th style="padding: 0.5rem;">Diferença</th>
+                    <tr>
+                        <th>Período</th>
+                        <th>Ideal</th>
+                        <th>Real</th>
+                        <th>Diferença</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                        <td style="padding: 0.5rem;">Semanal</td>
-                        <td style="padding: 0.5rem;">{{ "%.0f"|format(ideal['semanal']) }}</td>
-                        <td style="padding: 0.5rem;">{{ total_semanal }}</td>
+                    <tr>
+                        <td>Semanal</td>
+                        <td>{{ "%.0f"|format(ideal['semanal']) }}</td>
+                        <td>{{ total_semanal }}</td>
                         <td
-                            style="padding: 0.5rem; color: {{ 'var(--danger)' if (total_semanal - ideal['semanal']) < 0 else 'var(--success)' }};">
+                            style="color: {{ 'var(--danger-color)' if (total_semanal - ideal['semanal']) < 0 else 'var(--success-color)' }};">
                             {{ "%.0f"|format(total_semanal - ideal['semanal']) }}
                         </td>
                     </tr>
-                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                        <td style="padding: 0.5rem;">Mensal (Est.)</td>
-                        <td style="padding: 0.5rem;">{{ "%.0f"|format(ideal['mensal']) }}</td>
-                        <td style="padding: 0.5rem;">{{ mensal_est }}</td>
+                    <tr>
+                        <td>Mensal (Est.)</td>
+                        <td>{{ "%.0f"|format(ideal['mensal']) }}</td>
+                        <td>{{ mensal_est }}</td>
                         <td
-                            style="padding: 0.5rem; color: {{ 'var(--danger)' if (mensal_est - ideal['mensal']) < 0 else 'var(--success)' }};">
+                            style="color: {{ 'var(--danger-color)' if (mensal_est - ideal['mensal']) < 0 else 'var(--success-color)' }};">
                             {{ "%.0f"|format(mensal_est - ideal['mensal']) }}
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding: 0.5rem;">Anual (Est.)</td>
-                        <td style="padding: 0.5rem;">{{ "%.0f"|format(ideal['anual']) }}</td>
-                        <td style="padding: 0.5rem;">{{ anual_est }}</td>
+                        <td>Anual (Est.)</td>
+                        <td>{{ "%.0f"|format(ideal['anual']) }}</td>
+                        <td>{{ anual_est }}</td>
                         <td
-                            style="padding: 0.5rem; color: {{ 'var(--danger)' if (anual_est - ideal['anual']) < 0 else 'var(--success)' }};">
+                            style="color: {{ 'var(--danger-color)' if (anual_est - ideal['anual']) < 0 else 'var(--success-color)' }};">
                             {{ "%.0f"|format(anual_est - ideal['anual']) }}
                         </td>
                     </tr>
@@ -113,39 +126,39 @@
 
             <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
                 <span>Progresso da Meta Semanal:</span>
-                <span style="color: var(--success);">{{ "%.1f"|format((total_semanal / ideal['semanal'] * 100) if
+                <span style="color: var(--success-color);">{{ "%.1f"|format((total_semanal / ideal['semanal'] * 100) if
                     ideal['semanal'] > 0 else 0) }}%</span>
             </div>
             <div
                 style="width: 100%; background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; overflow: hidden;">
                 <div
-                    style="height: 100%; background: var(--success); width: {{ (total_semanal / ideal['semanal'] * 100) if ideal['semanal'] > 0 else 0 }}%;">
+                    style="height: 100%; background: var(--success-color); width: {{ (total_semanal / ideal['semanal'] * 100) if ideal['semanal'] > 0 else 0 }}%;">
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="glass-panel" style="margin-top: 2rem; padding: 1.5rem;">
+<div class="card" style="margin-top: 2rem;">
     <h3>Histórico de Lançamentos</h3>
-    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+    <table class="data-table">
         <thead>
-            <tr style="text-align: left; border-bottom: 1px solid var(--glass-border);">
-                <th style="padding: 0.5rem;">Dia</th>
-                <th style="padding: 0.5rem;">Turno</th>
-                <th style="padding: 0.5rem;">Quantidade</th>
+            <tr>
+                <th>Dia</th>
+                <th>Turno</th>
+                <th>Quantidade</th>
             </tr>
         </thead>
         <tbody>
             {% for item in producao %}
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                <td style="padding: 0.5rem;">{{ item['dia'] }}</td>
-                <td style="padding: 0.5rem;">{{ item['turno'] }}</td>
-                <td style="padding: 0.5rem;">{{ item['quantidade'] }}</td>
+            <tr>
+                <td>{{ item['dia'] }}</td>
+                <td>{{ item['turno'] }}</td>
+                <td>{{ item['quantidade'] }}</td>
             </tr>
             {% else %}
             <tr>
-                <td colspan="3" style="padding: 1rem; text-align: center; color: var(--secondary-color);">Nenhum
+                <td colspan="3" style="text-align: center; color: var(--text-secondary);">Nenhum
                     registro encontrado.</td>
             </tr>
             {% endfor %}

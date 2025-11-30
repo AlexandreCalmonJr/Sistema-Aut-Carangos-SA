@@ -2,9 +2,9 @@
 
 {% block content %}
 <div class="auth-container">
-    <div class="auth-card glass-panel">
+    <div class="auth-card card">
         <h2>Cadastrar Novo Usuário</h2>
-        <p style="color: var(--secondary-color); margin-bottom: 1.5rem;">Acesso Restrito (RH/Admin)</p>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Acesso Restrito (RH/Admin)</p>
 
         <form method="POST">
             <div class="form-group">
@@ -25,10 +25,10 @@
                     <option value="admin">Administrador</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Criar Usuário</button>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Criar Usuário</button>
         </form>
         <div style="margin-top: 1rem;">
-            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancelar</a>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" style="width: 100%;">Cancelar</a>
         </div>
     </div>
 </div>
