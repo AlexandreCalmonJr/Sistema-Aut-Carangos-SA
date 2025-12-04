@@ -71,6 +71,26 @@ Sistema Aut Carangos SA/
 
 ---
 
+## 📚 Documentação
+
+O projeto possui documentação completa e organizada para facilitar o desenvolvimento e manutenção:
+
+### 📖 Documentação dos Módulos
+- **[README_MODULES.md](./README_MODULES.md)** - Resumo executivo da documentação dos módulos
+- **[MODULES_DOCUMENTATION.md](./MODULES_DOCUMENTATION.md)** - Documentação técnica completa (22 funções documentadas)
+- **[DOCUMENTATION_GUIDE.md](./DOCUMENTATION_GUIDE.md)** - Guia de uso de toda a documentação
+
+### 🎴 Organização e Workflow
+- **[TRELLO_CARD_TEMPLATE.md](./TRELLO_CARD_TEMPLATE.md)** - Templates de cards para Trello (5 cards prontos)
+- **[PULL_REQUEST_TEMPLATE.md](./.github/PULL_REQUEST_TEMPLATE.md)** - Template padrão de Pull Request
+
+### 🚀 Deploy
+- **[DEPLOY.md](./DEPLOY.md)** - Guia completo de deploy em nuvem
+
+**💡 Comece por aqui:** [README_MODULES.md](./README_MODULES.md) para ter uma visão geral rápida!
+
+---
+
 ## 🛠️ Instalação e Configuração
 
 ### Pré-requisitos
@@ -192,5 +212,5 @@ python tests/test_app.py
 
 ## 👨‍💻 Autor
 
-Desenvolvido por **Antigravity** (Google DeepMind) em colaboração com **Alexandre J**.
+Desenvolvido por **Antigravity** (Google DeepMind) em colaboração com **Alexandre Junior**.
 Projeto focado em **Clean Code**, **Arquitetura Modular** e **Automação**.
